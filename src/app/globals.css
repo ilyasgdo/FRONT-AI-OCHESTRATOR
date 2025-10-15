@@ -144,3 +144,35 @@
 /* Fade‑in util quand tw-animate-css n’est pas appliqué */
 @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
 .animate-fade-in { animation: fadeIn 800ms ease both; }
+
+/* Styles premium réutilisables */
+.glass-card {
+  background-color: color-mix(in oklab, var(--card), var(--muted) 10%);
+  backdrop-filter: blur(8px);
+  border: 1px solid oklch(1 0 0 / 14%);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px oklch(0 0 0 / 4%);
+}
+.hover-raise { transition: transform 300ms ease, box-shadow 300ms ease; }
+.hover-raise:hover { transform: translateY(-2px); box-shadow: 0 14px 40px oklch(0 0 0 / 10%); }
+
+.neon-border {
+  position: relative;
+}
+.neon-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, color-mix(in oklab, var(--primary), white 15%), color-mix(in oklab, var(--accent), white 15%));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Conteneur de page cohérent */
+.page-container { @apply mx-auto max-w-6xl px-4; }
+
+/* Diviseur doux pour séparer des blocs de contenu */
+.soft-divider { @apply h-px w-full bg-neutral-200 dark:bg-neutral-800; }

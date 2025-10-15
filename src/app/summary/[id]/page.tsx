@@ -35,12 +35,12 @@ export default async function SummaryPage({ params }: { params: { id: string } }
       {profile && (
         <section className="rounded-lg border bg-white p-4">
           <h2 className="font-medium mb-2">Profil synthétisé</h2>
-          <pre className="text-xs bg-neutral-50 p-3 rounded-md overflow-auto">{JSON.stringify(profile, null, 2)}</pre>
+          <pre className="text-xs glass-card p-3 rounded-md overflow-auto">{JSON.stringify(profile, null, 2)}</pre>
         </section>
       )}
 
       <div className="flex gap-3">
-        <a href={`/course/${course.id}`} className="inline-flex h-9 px-3 items-center justify-center rounded-md border">Retour au parcours</a>
+        <a href={`/course/${course.id}`} className="inline-flex h-9 px-3 items-center justify-center rounded-md border transition-transform duration-300 hover:-translate-y-0.5">Retour au parcours</a>
       </div>
     </div>
   );

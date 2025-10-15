@@ -63,7 +63,7 @@ export default function ModuleInteractive({ moduleId, quizzes, chatbotContext }:
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Quiz */}
-      <section className="rounded-lg border bg-white p-4">
+      <section className="glass-card p-4 hover-raise">
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-medium">Quiz interactif</h2>
           {quizzes?.length ? (
@@ -79,9 +79,9 @@ export default function ModuleInteractive({ moduleId, quizzes, chatbotContext }:
               const isCorrect = isValidated && selected === q.answer;
               const cardClass = isValidated
                 ? isCorrect
-                  ? "border-emerald-400 bg-emerald-50"
-                  : "border-rose-400 bg-rose-50"
-                : "border-neutral-200 bg-white";
+                  ? "border-emerald-400 bg-emerald-50/70 dark:bg-emerald-900/20"
+                  : "border-rose-400 bg-rose-50/70 dark:bg-rose-900/20"
+                : "border-neutral-200 bg-white dark:bg-neutral-900";
               return (
                 <li key={key} className={`rounded-md border ${cardClass} p-3`}>
                   <div className="font-medium mb-2">{q.question}</div>
@@ -105,7 +105,7 @@ export default function ModuleInteractive({ moduleId, quizzes, chatbotContext }:
                     <button
                       onClick={() => setValidated((v) => ({ ...v, [key]: true }))}
                       disabled={!selected || isValidated}
-                      className="px-3 py-1.5 text-sm rounded-md bg-neutral-900 text-white disabled:opacity-50"
+                      className="px-3 py-1.5 text-sm rounded-md bg-neutral-900 text-white disabled:opacity-50 transition-transform duration-300 hover:-translate-y-0.5"
                     >
                       Valider
                     </button>
@@ -125,15 +125,15 @@ export default function ModuleInteractive({ moduleId, quizzes, chatbotContext }:
       </section>
 
       {/* Chatbot */}
-      <section className="rounded-lg border bg-white p-4">
+      <section className="glass-card p-4 hover-raise">
         <h2 className="font-medium mb-3">Chatbot du module</h2>
         <div className="h-64 overflow-y-auto space-y-3 pr-1">
           {messages.map((m, idx) => (
             <div
               key={idx}
-              className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm shadow-sm ${
+              className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm shadow-sm transition-all duration-300 ${
                 m.role === "assistant"
-                  ? "bg-neutral-100 text-neutral-800"
+                  ? "bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100"
                   : "bg-blue-600 text-white ml-auto"
               }`}
             >
@@ -158,7 +158,7 @@ export default function ModuleInteractive({ moduleId, quizzes, chatbotContext }:
           <button
             onClick={sendMessage}
             disabled={sending || chatDisabled}
-            className="px-3 py-2 rounded-md text-sm bg-neutral-900 text-white disabled:opacity-50"
+            className="px-3 py-2 rounded-md text-sm bg-neutral-900 text-white disabled:opacity-50 transition-transform duration-300 hover:-translate-y-0.5"
           >
             Envoyer
           </button>
@@ -166,7 +166,7 @@ export default function ModuleInteractive({ moduleId, quizzes, chatbotContext }:
         {chatbotContext && (
           <details className="mt-3 text-xs text-neutral-600">
             <summary className="cursor-pointer">Voir le contexte</summary>
-            <pre className="mt-2 bg-neutral-50 p-3 rounded-md overflow-auto">{chatbotContext}</pre>
+            <pre className="mt-2 bg-neutral-50 dark:bg-neutral-900 p-3 rounded-md overflow-auto">{chatbotContext}</pre>
           </details>
         )}
       </section>

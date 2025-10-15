@@ -35,7 +35,7 @@ export default async function LessonPage({ params }: { params: any }) {
   return (
     <div className="space-y-6">
       <AnimatedSection>
-        <section className="rounded-lg border bg-white p-4 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
+        <section className="glass-card p-4 hover-raise">
           <div className="flex items-start justify-between gap-3">
             <div>
               <h1 className="text-2xl font-semibold">{base.title}</h1>
@@ -58,7 +58,7 @@ export default async function LessonPage({ params }: { params: any }) {
         <LessonContinueClient lessonId={id} initialContent={parsed} />
       ) : (
         <AnimatedSection delay={120}>
-          <section className="rounded-lg border bg-white p-4">
+          <section className="glass-card p-4 hover-raise">
             <div className="prose prose-neutral max-w-none whitespace-pre-wrap">
               {base.content}
             </div>

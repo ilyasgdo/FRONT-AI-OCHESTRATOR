@@ -12,7 +12,7 @@ export default async function ModulePage({ params }: { params: { id: string } })
   return (
     <div className="space-y-6">
       <AnimatedSection>
-        <section className="rounded-lg border bg-white p-4 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
+        <section className="glass-card p-4 hover-raise transition-all duration-300">
           <h1 className="text-2xl font-semibold">{module.title}</h1>
           {module.description && (
             <p className="text-sm text-neutral-600 mt-1">{module.description}</p>

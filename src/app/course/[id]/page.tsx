@@ -50,7 +50,7 @@ export default async function CoursePage({ params }: { params: { id: string } })
 
       {course.best_practices && (
         <AnimatedSection delay={240}>
-          <section className="rounded-lg border bg-white p-4">
+          <section className="glass-card p-4 hover-raise">
             <h2 className="font-medium mb-2">Bonnes pratiques</h2>
             <ul className="list-disc pl-5 text-sm space-y-1">
               {course.best_practices.map((bp, i) => (

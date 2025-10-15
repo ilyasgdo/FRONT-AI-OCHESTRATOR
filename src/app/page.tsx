@@ -76,19 +76,19 @@ export default function Home() {
 
         {/* Valeur et fonctionnalités */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6">
-          <Card className="group p-5 text-left transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+          <Card className="group glass-card p-5 text-left transition-all duration-300 hover-raise">
             <CardTitle className="flex items-center gap-2"><Gauge className="size-4 group-hover:animate-float-slow" /> Personnalisation</CardTitle>
             <CardDescription>
               Un parcours adapté à votre secteur, niveau et outils utilisés.
             </CardDescription>
           </Card>
-          <Card className="group p-5 text-left transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+          <Card className="group glass-card p-5 text-left transition-all duration-300 hover-raise">
             <CardTitle className="flex items-center gap-2"><Rocket className="size-4 group-hover:animate-float-slow" /> Génération IA</CardTitle>
             <CardDescription>
               Modules, leçons et quiz générés et enrichis automatiquement.
             </CardDescription>
           </Card>
-          <Card className="group p-5 text-left transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+          <Card className="group glass-card p-5 text-left transition-all duration-300 hover-raise">
             <CardTitle className="flex items-center gap-2"><BookOpen className="size-4 group-hover:animate-float-slow" /> Interactif</CardTitle>
             <CardDescription>
               Quiz intégrés, chatbot contextuel, références et exemples concrets.

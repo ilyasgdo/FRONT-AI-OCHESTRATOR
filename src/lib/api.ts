@@ -9,7 +9,7 @@ import type {
   LessonDetail,
 } from "@/types/api";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
 async function toJson<T>(res: Response): Promise<T> {
   if (!res.ok) {

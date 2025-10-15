@@ -19,10 +19,34 @@ export default function LessonRenderer({ content }: Props) {
             return { type: "text", heading, text } as const;
           }
           if (t === "list") {
+            // Normaliser les items pour éviter l'affichage brut des objets JSON
+            // Deux formes gérées:
+            // - Texte simple: { kind: "text", text }
+            // - Quiz inline: { kind: "quiz", question, options[], answer? }
             const items = Array.isArray(sec.items)
               ? sec.items
-                  .map((it: any) => (typeof it === "string" ? it : JSON.stringify(it ?? "")))
-                  .filter((s: string) => s.length > 0)
+                  .map((it: any) => {
+                    if (typeof it === "string") {
+                      return { kind: "text", text: it } as const;
+                    }
+                    if (it && typeof it === "object") {
+                      const question = typeof it.question === "string" ? it.question : undefined;
+                      const text = typeof it.text === "string" ? it.text : undefined;
+                      const options = Array.isArray(it.options)
+                        ? it.options
+                            .map((o: any) => (typeof o === "string" ? o : JSON.stringify(o ?? "")))
+                            .filter((s: string) => s.length > 0)
+                        : [];
+                      const answer = typeof it.answer === "string" ? it.answer : undefined;
+                      if ((question || text) && options.length > 0) {
+                        return { kind: "quiz", question: question ?? (text as string), options, answer } as const;
+                      }
+                      // Objet non reconnu: fallback en texte JSON
+                      return { kind: "text", text: JSON.stringify(it ?? "") } as const;
+                    }
+                    return null;
+                  })
+                  .filter(Boolean)
               : [];
             const heading = typeof sec.heading === "string" ? sec.heading : undefined;
             return { type: "list", heading, items } as const;
@@ -83,7 +107,7 @@ export default function LessonRenderer({ content }: Props) {
             case "text":
               return (
                 <AnimatedSection key={key} delay={80 * idx}>
-                  <section>
+                  <section className="glass-card p-4 hover-raise">
                     {sec.heading && (
                       <h3 className="text-lg font-medium mb-1">{sec.heading}</h3>
                     )}
@@ -94,14 +118,33 @@ export default function LessonRenderer({ content }: Props) {
             case "list":
               return (
                 <AnimatedSection key={key} delay={80 * idx}>
-                  <section>
+                  <section className="glass-card p-4 hover-raise">
                     {sec.heading && (
                       <h3 className="text-lg font-medium mb-1">{sec.heading}</h3>
                     )}
-                    <ul className="list-disc pl-6 space-y-1">
-                      {sec.items.map((it, i) => (
-                        <li key={`${key}-${i}`} className="text-neutral-800">{it}</li>
-                      ))}
+                    <ul className="pl-6 space-y-2">
+                      {sec.items.map((it: any, i: number) => {
+                        const itemKey = `${key}-${i}`;
+                        if (it?.kind === "quiz") {
+                          return (
+                            <li key={itemKey} className="text-neutral-800">
+                              <div className="font-medium mb-1">{it.question}</div>
+                              <ul className="list-disc pl-5 space-y-0.5">
+                                {it.options.map((opt: string, oi: number) => (
+                                  <li key={`${itemKey}-opt-${oi}`}>{opt}</li>
+                                ))}
+                              </ul>
+                              {it.answer && (
+                                <div className="mt-1 text-xs text-neutral-600">Réponse: <span className="font-medium">{it.answer}</span></div>
+                              )}
+                            </li>
+                          );
+                        }
+                        // Texte simple
+                        return (
+                          <li key={itemKey} className="list-disc text-neutral-800">{it?.text ?? String(it)}</li>
+                        );
+                      })}
                     </ul>
                   </section>
                 </AnimatedSection>
@@ -109,7 +152,7 @@ export default function LessonRenderer({ content }: Props) {
             case "code":
               return (
                 <AnimatedSection key={key} delay={80 * idx}>
-                  <section>
+                  <section className="glass-card p-4 hover-raise not-prose">
                     {sec.heading && (
                       <h3 className="text-lg font-medium mb-1">{sec.heading}</h3>
                     )}
@@ -122,7 +165,7 @@ export default function LessonRenderer({ content }: Props) {
             case "callout":
               return (
                 <AnimatedSection key={key} delay={80 * idx}>
-                  <section>
+                  <section className="glass-card p-4 hover-raise">
                     {sec.heading && (
                       <h3 className="text-lg font-medium mb-1">{sec.heading}</h3>
                     )}
@@ -145,7 +188,7 @@ export default function LessonRenderer({ content }: Props) {
         })}
         {Array.isArray(content.references) && content.references.length > 0 && (
           <AnimatedSection delay={80 * safeSections.length}>
-            <section>
+            <section className="glass-card p-4 hover-raise">
               <h3 className="text-lg font-medium mb-1">Références</h3>
               <ul className="list-disc pl-6 space-y-1">
                 {content.references
@@ -164,7 +207,7 @@ export default function LessonRenderer({ content }: Props) {
 
         {quiz.length > 0 && (
           <AnimatedSection delay={100 * (safeSections.length + 1)}>
-            <section className="rounded-lg border bg-white p-4 not-prose">
+            <section className="glass-card p-4 hover-raise not-prose">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-lg font-medium">Quiz de la leçon</h3>
                 <span className="text-xs text-neutral-600">Score: {score.correct}/{score.total}</span>

@@ -36,10 +36,21 @@ export default function LessonContinueClient({ lessonId, initialContent }: Props
   return (
     <div className="space-y-6">
       <AnimatedSection>
-        <section className="rounded-lg border bg-white p-4 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
+        <section className="glass-card p-4 hover-raise">
           <div className="flex items-center justify-between">
             <div className="text-sm text-neutral-700">
               <span>Pages ajoutées: {count}/{max}</span>
+              {(() => {
+                const percent = Math.max(0, Math.min(100, Math.round((count / (max || 1)) * 100)));
+                return (
+                  <div className="mt-2 h-1.5 w-48 rounded-full bg-neutral-200">
+                    <div
+                      className="h-full rounded-full bg-neutral-900 transition-all duration-300"
+                      style={{ width: `${percent}%` }}
+                    />
+                  </div>
+                );
+              })()}
             </div>
             <button
               onClick={handleContinue}
@@ -53,7 +64,7 @@ export default function LessonContinueClient({ lessonId, initialContent }: Props
       </AnimatedSection>
 
       <AnimatedSection delay={120}>
-        <section className="rounded-lg border bg-white p-4">
+        <section className="glass-card p-4 hover-raise">
           {content ? (
             <LessonRenderer content={content} />
           ) : (

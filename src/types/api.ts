@@ -3,8 +3,22 @@ export type ProfileInput = {
   job: string;
   sector: string;
   ai_level: string;
-  tools_used?: string[];
+  tools_used?: string[] | Record<string, any>;
   work_style?: string;
+  // Champs avancés optionnels
+  seniority?: string;
+  experience_years?: number;
+  company_size?: string;
+  preferred_models?: string;
+  learning_goals?: string;
+  availability_hours_per_week?: number;
+  timezone?: string;
+  language?: string;
+  industries?: string;
+  compliance_needs?: string;
+  data_privacy_notes?: string;
+  hardware_constraints?: string;
+  preferred_workflows?: string;
 };
 
 export type ProfileResponse = {
